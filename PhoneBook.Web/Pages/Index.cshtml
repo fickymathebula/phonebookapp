@@ -1,0 +1,119 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Phone Book List";
+    var selectedPhoneBook = ViewBag.SelectedPhoneBook;
+    var searchtext = ViewBag.TextSearch;
+}
+
+<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        // Restrict search button when search text is empty
+        $("#btnSearch").click(function () {
+
+            var inputvalid = false;
+
+            if ($("#txtSearch").val() == "") {
+                inputvalid = false
+            } else {
+                inputvalid = true;
+            }
+            
+            return inputvalid;
+        });
+
+    });
+
+    function GetEntriesByPhoneBook() {
+        $("#txtSearch").val("");
+        $("#btnBookChange").click();
+    }
+</script>
+
+
+<div class="text-center">
+    <h1 class="display-4">Phone Book List</h1>
+</div>
+<hr />
+<br />
+<form method="get">
+    <div class="row">
+        <div class="col-sm-2">
+            <label>Select Phone Book</label>
+        </div>
+        <div class="col-sm-6">
+            <select class="form-control" id="drpPhoneBook" name="drpPhoneBook" onchange="GetEntriesByPhoneBook();">
+                <option value="0">All</option>
+                @foreach (var item in ViewBag.AllPhoneBooks)
+                {
+                    if (item.id == selectedPhoneBook)
+                    {
+                        <option value="@item.id" selected>@item.name</option>
+                    }
+                    else
+                    {
+                        <option value="@item.id">@item.name</option>
+                    }
+                }
+            </select>
+            <input type="submit" id="btnBookChange" hidden />
+        </div>
+        <div class="col-sm-4" style="text-align:right;">
+            <a href="AddPhoneBook" class="btn btn-primary">
+                <span class="glyphicon glyphicon-plus"></span>
+                Add Phone Book
+            </a>
+        </div>
+    </div>
+    <hr />
+    <br />
+    <h3>Phone Book Entries</h3>
+    <div class="row">
+
+        <div class="col-sm-8">
+            <div class="form-inline">
+                <input type="text" class="form-control" name="strsearch" id="txtSearch" value="@searchtext" />
+                <input type="submit" id="btnSearch" value=" Search" class="btn btn-primary" />
+            </div>
+        </div>
+
+        <div class="col-sm-4" style="text-align:right;">
+            <a href="AddPhoneBookEntry" class="btn btn-primary">
+                <span class="glyphicon glyphicon-plus"></span>
+                Add New Entry
+            </a>
+        </div>
+
+    </div>
+    <br />
+    <div class="row">
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Phone Number</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @if (ViewBag.AllEntries != null)
+                {
+                    @foreach (var entry in ViewBag.AllEntries)
+                    {
+                        <tr>
+                            <td>@entry.name</td>
+                            <td>@entry.phoneNumber</td>
+                            <td><a href="EditPhoneBookEntry?Id=@entry.id">Edit</a></td>
+                        </tr>
+                    }
+                }
+
+            </tbody>
+        </table>
+
+    </div>
+</form>

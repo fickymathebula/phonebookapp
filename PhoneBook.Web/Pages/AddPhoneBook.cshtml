@@ -1,0 +1,48 @@
+﻿@page
+@model PhoneBook.Web.Pages.AddPhoneBookModel
+@{
+    ViewData["Title"] = "Add Phone Book";
+    var outputmsg = ViewBag.outputmsg;    
+}
+
+<div class="text-center">
+    <h1 class="display-4">Add Phone Book</h1>
+</div>
+<hr />
+<br />
+<form method="post">
+
+    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+    @if (@outputmsg != null)
+    {
+        if (@outputmsg == "Success")
+        {
+            <div class="alert alert-success alert-dismissible">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                Phone Book Successfully Added!
+            </div>
+        }
+        <br />
+    }
+    <div class="row">
+        <span asp-validation="PhoneBookName" class="text-danger"></span>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-2">
+            Phone Book Name
+        </div>
+        <div class="col-sm-4">
+            <input class="form-control" type="text" name="phoneBookName" id="txtPhoneBookName" value="@ViewBag.phoneBookName"/>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-sm-6">
+            <a class="btn btn-primary" href="Index">Back</a>
+        </div>
+        <div class="col-sm-6" style="text-align:right;">
+            <input class="btn btn-primary" type="submit" value="Save" />
+        </div>
+    </div>
+</form>

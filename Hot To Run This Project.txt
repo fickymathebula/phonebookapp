@@ -1,0 +1,19 @@
+How To Run PhoneBook Application:
+
+1. The Solution has two projects:
+	- PhoneBook.Web
+	- PhoneBook.WebApi
+
+2. I have attached the database backup and a script to create this database in folder (PhoneBook.WebApi\Database Scripts)
+	- Please restore the dabatase backup or use the script to generate the database and required tables for this application
+
+3. Please right click on solution and select properties to ensure that start up projects is set to multiple 
+	- Please ensure that all projects are set to Start & webapi project should run first
+
+4. Please change Api confiruration client Uri on (PhoneBook.Web\ApiConfig\ApiConnectionConfig.cs)
+	- change uri 'localhost:3821' to your local domain host
+
+5. Please change database conection string on (PhoneBook.WebApi\appsettings.Development.json)
+
+6. Debug and run the applications
+

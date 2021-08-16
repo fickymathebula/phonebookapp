@@ -1,0 +1,85 @@
+﻿@page
+@model PhoneBook.Web.Pages.EditPhoneBookEntryModel
+@{
+    ViewData["Title"] = "Edit Phone Book Entry";
+    var item = ViewBag.PhoneBookEntry;
+    var outputmsg = ViewBag.outputmsg;
+}
+
+<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#txtPhoneNumber').keypress(function (e) {
+
+            var charCode = (e.which) ? e.which : event.keyCode
+
+            if (String.fromCharCode(charCode).match(/[^0-9]/g)) { return false; }
+
+            var length = jQuery(this).val().length;
+            if (length > 9) {
+                return false;
+            }
+        });
+    });
+</script>
+
+<div class="text-center">
+    <h1 class="display-4">Edit Phone Book Entry</h1>
+</div>
+<hr />
+<br />
+<form method="post">
+
+    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+    @if (@outputmsg != null)
+    {
+        if (@outputmsg == "Success")
+        {
+            <div class="alert alert-success alert-dismissible">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                Entry Successfully Saved!
+            </div>
+        }
+        <br />
+    }
+    <input type="hidden" name="PhoneEntryId" value="@item.id" />
+    <input type="hidden" name="PhoneBookId" value="@item.phoneBookId" />
+
+    <div class="row">
+        <div class="col-sm-2">
+            Phone Book
+        </div>
+        <div class="col-sm-4">
+            <input class="form-control" type="text" value="@item.phoneBookName" disabled />
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-sm-2">
+            Name
+        </div>
+        <div class="col-sm-4">
+            <input class="form-control" type="text" name="name" id="txtName" value="@item.name" />            
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-sm-2">
+            Phone Number
+        </div>
+        <div class="col-sm-4">
+            <input class="form-control" type="text" name="phoneNumber" id="txtPhoneNumber" value="@item.phoneNumber" />
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-sm-6">
+            <a class="btn btn-primary" href="Index">Back</a>
+        </div>
+        <div class="col-sm-6" style="text-align:right;">
+            <input class="btn btn-primary" type="submit" value="Save" />
+        </div>
+    </div>
+</form>
